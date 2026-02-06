@@ -1,121 +1,130 @@
 .premium-footer {
-  background-color: #1a1a1a !important;
-  color: #999 !important;
-  padding: 60px 0 20px 0 !important;
-  border-top: 1px solid #333;
+  background-color: #1a1628;
+  color: #b6b3b3;
+  padding: 80px 0 30px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .premium-footer .footer-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 40px;
-  max-width: 1440px;
+  grid-template-columns: 2fr 1fr 1.5fr;
+  gap: 60px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
 .premium-footer .footer-logo {
-  font-size: 2rem;
-  margin: 0 0 30px 0;
-  text-align: left;
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  font-weight: 800;
+  letter-spacing: -1px;
 }
 
-.premium-footer .footer-logo span:nth-child(1) { color: #004494 !important; }
-.premium-footer .footer-logo span:nth-child(2) { color: #d40000 !important; }
+.premium-footer .footer-logo span:nth-child(1) { color: #FFCE00; }
+.premium-footer .footer-logo span:nth-child(2) { color: #ffffff; }
+
+.footer-tagline {
+  font-size: 0.9rem;
+  margin-bottom: 25px;
+  color: #888;
+}
 
 .premium-footer h3 {
-  color: #b6b3b3 !important;
-  margin-bottom: 25px;
-  font-size: 1.2rem;
+  color: #ffffff;
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .premium-footer ul {
-  list-style: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-.premium-footer li {
-  list-style: none !important;
-  list-style-type: none !important;
+  list-style: none;
+  padding: 0;
 }
 
 .premium-footer .social-links {
   display: flex;
-  gap: 12px;
-  margin: 25px 0;
-  padding: 0;
-  list-style: none !important;
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
 .premium-footer .social-links a {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  transition: transform 0.3s ease;
-  background: #ffffff;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.premium-footer .social-links a:hover {
+  transform: translateY(-5px);
+  background: #FFCE00;
+}
+
+.premium-footer .social-links a:hover svg {
+  fill: #1a1628;
 }
 
 .premium-footer .social-links svg {
   width: 20px;
   height: 20px;
-}
-
-.whatsapp svg { fill: #25D366; }
-.instagram svg { fill: #E4405F; }
-.facebook svg { fill: #1877F2; }
-.x-twitter svg { fill: #000000; }
-
-.premium-footer .social-links a:hover {
-  transform: translateY(-4px);
+  fill: #ffffff;
+  transition: 0.3s;
 }
 
 .premium-footer .contact-info a, 
-.premium-footer .footer-links a {
-  color: #999 !important;
+.premium-footer .footer-links a,
+.premium-footer .footer-links Link {
+  color: #b6b3b3;
   text-decoration: none;
   display: block;
   margin-bottom: 15px;
   font-size: 0.95rem;
+  transition: 0.3s;
+}
+
+.premium-footer .footer-links a:hover {
+  color: #FFCE00;
+  padding-left: 5px;
 }
 
 .premium-footer .footer-disclaimer p {
-  color: #888;
-  font-size: 0.9rem;
-  line-height: 1.6;
+  color: #777;
+  font-size: 0.85rem;
+  line-height: 1.8;
 }
 
 .premium-footer .footer-bottom {
   text-align: center;
-  margin-top: 50px;
-  padding: 30px 20px 0;
-  border-top: 1px solid #333;
-  color: #666;
-  font-size: 0.85rem;
+  margin-top: 80px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: #555;
+  font-size: 0.8rem;
 }
-.footer-logo h2 {
-    color: goldenrod;
+
+@media (max-width: 992px) {
+  .premium-footer .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (max-width: 768px) {
   .premium-footer .footer-grid {
     grid-template-columns: 1fr;
     text-align: center;
+    gap: 40px;
   }
-
-  .premium-footer .footer-logo {
-    text-align: center;
-  }
-
   .premium-footer .social-links {
     justify-content: center;
   }
-
-  .premium-footer .contact-info a, 
-  .premium-footer .footer-links a {
-    text-align: center;
+  .premium-footer .footer-links a:hover {
+    padding-left: 0;
   }
 }

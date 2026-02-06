@@ -4,12 +4,14 @@ import logo from '../../img/logo2.JPG';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+
   const scrollToEnroll = () => {
-  const section = document.getElementById('enroll-now');
-  if (section) {
-    section.scrollIntoView({ behavior: 'smooth' });
-  }
-};
+    setIsOpen(false);
+    const section = document.getElementById('enroll-now');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <nav className="navbar">
@@ -29,7 +31,11 @@ function Navbar() {
           <li><a href="/Courses" onClick={() => setIsOpen(false)}>Courses</a></li>
           <li><a href="/about" onClick={() => setIsOpen(false)}>About</a></li>
           <li><a href="/blog" onClick={() => setIsOpen(false)}>Blog</a></li>
-          <li><a href="/enroll" className="enroll-btn" onClick={scrollToEnroll}>Enroll Now</a></li>
+          <li>
+            <button className="enroll-btn-nav" onClick={scrollToEnroll}>
+              Enroll Now
+            </button>
+          </li>
         </ul>
       </div>
     </nav>

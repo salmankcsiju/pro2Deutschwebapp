@@ -1,16 +1,49 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './Blog.css';
 
 const Blog = () => {
+  const [counts, setCounts] = useState({ students: 0, passRate: 0, batches: 0 });
+  const hasStarted = useRef(false);
+
+  const startCounting = () => {
+    const duration = 2000;
+    const targets = { students: 500, passRate: 98, batches: 40 };
+    const startTime = performance.now();
+
+    const update = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+
+      setCounts({
+        students: Math.floor(easedProgress * targets.students),
+        passRate: Math.floor(easedProgress * targets.passRate),
+        batches: Math.floor(easedProgress * targets.batches)
+      });
+
+      if (progress < 1) requestAnimationFrame(update);
+    };
+    requestAnimationFrame(update);
+  };
+
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('reveal');
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal');
+          if (entry.target.classList.contains('stats-grid') && !hasStarted.current) {
+            hasStarted.current = true;
+            startCounting();
+          }
+        }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.2 });
 
-    document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+    const animatedElements = document.querySelectorAll('.animate');
+    animatedElements.forEach(el => observer.observe(el));
+
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -24,17 +57,28 @@ const Blog = () => {
       </header>
 
       <div className="container main-content">
-        <section className="intro-card animate">
-          <div className="intro-grid">
-            <div className="intro-text">
-              <h2>Stop just "Learning" and start "Communicating"</h2>
-              <p>We address the honest questions: Why do B2 graduates struggle to speak? How do you prepare in 30 days? Which level actually gets you hired?</p>
-            </div>
-            <div className="intro-stats">
-              <div className="stat"><span>A1-B2</span>Pathways</div>
-              <div className="stat"><span>100%</span>Online</div>
-            </div>
+        <section className="stats-grid animate">
+          <div className="stat-item">
+            <h2>{counts.students}+</h2>
+            <p>Happy Students</p>
           </div>
+          <div className="stat-item">
+            <h2>{counts.passRate}%</h2>
+            <p>Exam Pass Rate</p>
+          </div>
+          <div className="stat-item">
+            <h2>{counts.batches}+</h2>
+            <p>Batches Completed</p>
+          </div>
+        </section>
+
+        <section className="cefr-info animate">
+          <h2 className="title-center">Understanding German Proficiency Levels</h2>
+          
+          <p className="description-center">
+            The Common European Framework of Reference for Languages (CEFR) is the international standard 
+            for describing language ability.
+          </p>
         </section>
 
         <h2 className="section-label animate">Career Milestone Map</h2>
@@ -65,28 +109,13 @@ const Blog = () => {
           </div>
         </div>
 
-        <section className="problem-solver animate">
-          <div className="content-box">
-            <div className="icon-header">🗣️</div>
-            <h2>The B2 Paradox</h2>
-            <p>Passed B2 but still can't speak? It’s common. Most courses prioritize grammar over conversation. We fix this by focusing on <strong>Natural Flow</strong> and <strong>Pronunciation.</strong></p>
-          </div>
-          <div className="content-box dark">
-            <div className="icon-header">📚</div>
-            <h2>Vocab  Grammar</h2>
-            <p>Struggling for words? You don't need more grammar rules; you need <strong>usable vocabulary.</strong> Our training focuses on active recall and high-frequency professional terms.</p>
-          </div>
-        </section>
-
-        <section className="exam-blueprint animate">
-          <h2 className="title-center">30-Day Exam Blueprint</h2>
-          <div className="blueprint-grid">
-            {["Focus on Grammar & Vocabulary", "Listening & Reading Speed", "Writing & Speaking Structure", "Full Mock & Error Analysis"].map((task, i) => (
-              <div key={i} className="step-card">
-                <div className="step-num">Week {i + 1}</div>
-                <p>{task}</p>
-              </div>
-            ))}
+        <section className="quiz-banner animate">
+          <div className="quiz-content">
+            <h2>Not sure where to start?</h2>
+            <p>Take our 5-minute proficiency test to find the right course for you.</p>
+            <button className="btn-quiz" onClick={() => alert("Coming Soon!")}>
+              Check My Level Now
+            </button>
           </div>
         </section>
 
@@ -94,7 +123,7 @@ const Blog = () => {
           <div className="footer-glass">
             <h2>Ready to find your level?</h2>
             <p>Join Pro2Deutsch for structured guidance and honest support.</p>
-            <Link to="/Courses" className="btn-glow">Explore Courses</Link>
+            <Link to="/courses" className="btn-glow">Explore Courses</Link>
           </div>
         </section>
       </div>

@@ -10,6 +10,7 @@ import Blog from './pages/Blog/Blog';
 import WhatsAppWidget from './components/Whatsapp/WhatsAppWidget';
 import Enrollment from './components/Enrollment/Enrollment';
 import Features from './components/Features/Features';
+import CourseDetail from './pages/CoursesDetails/CourseDetail';
 import { coursesData } from './data';
 
 
@@ -31,6 +32,8 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/enroll" element={<Enrollment />} />
+            <Route path="/course/:id" 
+            element={<CourseDetail />} />
           </Routes>
         </div>
         <Footer />

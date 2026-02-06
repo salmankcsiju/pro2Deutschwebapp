@@ -10,13 +10,15 @@ const Features = () => {
   ];
 
   return (
-    <section className="features-dark">
+    <section className="features-navy">
       <div className="features-container">
         <div className="features-grid">
           {features.map((item, index) => (
             <div className="feature-item" key={index}>
-              <div className="icon-outline">
-                <span className="icon-inner">{item.icon}</span>
+              <div className="icon-wrapper">
+                <div className="icon-circle">
+                  <span className="icon-inner">{item.icon}</span>
+                </div>
               </div>
               <h3>{item.title}</h3>
               <p>{item.desc}</p>
