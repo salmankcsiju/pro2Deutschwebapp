@@ -1,130 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+
+:root {
+  --germany-red: #C00000;
+  --germany-gold: #ac8d29d3;
+  --white: #ffffff;
+}
+
+/* Vertical and horizontal spacing fix */
 .spotlight-section {
-    width: 100%;
-    min-height: 85vh;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: left;
-    padding: 80px 60px;
-    background: linear-gradient(180deg, #221d33 0%, #1a1628 100%);
     overflow: hidden;
-}
-
-.container-header {
-    flex: 1;
-    max-width: 600px;
-    padding-right: 40px;
-    opacity: 0;
-    transition: opacity 1.2s ease-out, transform 1.2s ease-out;
-    transform: translateY(20px);
-}
-
-.container-header.active-anim {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.img-container {
-    flex: 1;
+    min-height: 90vh;
     display: flex;
-    justify-content: flex-end;
     align-items: center;
+    padding: 60px 0;
+    transition: background-color 2s ease;
+    border-radius: 20px;
+    margin: 40px 40px; 
+}
+
+.dynamic-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(25px);
+    transform: scale(1.1);
+    z-index: -1;
+}
+
+.spotlight-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 80px; /* INCREASED GAP TO FIX TEXT OVERLAP */
+}
+
+.slide-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 4.5rem;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* Image Stack Alignment Fix */
+.image-side { 
+    flex: 1; 
+    position: relative; 
+    height: 500px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-stack {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Floating effect for images */
+@keyframes float {
+    0% { transform: translateY(0) rotate(var(--rot)); }
+    50% { transform: translateY(-15px) rotate(calc(var(--rot) + 2deg)); }
+    100% { transform: translateY(0) rotate(var(--rot)); }
+}
+
+.stack-img {
+    position: absolute;
+    width: 420px; 
+    height: 300px;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    border: 5px solid rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+    animation: float 4s ease-in-out infinite;
+}
+
+.stack-img img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Fixed fan positions */
+.img-0 { z-index: 3; top: 5%; right: 0%; --rot: 3deg; animation-delay: 0s; }
+.img-1 { z-index: 2; top: 12%; right: 8%; --rot: -6deg; animation-delay: 0.5s; }
+.img-2 { z-index: 1; top: 20%; right: 4%; --rot: 2deg; animation-delay: 1s; }
+
+/* Buttons & Dots */
+.tagline {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--white) !important; /* Forces color to White as requested */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); /* Shadow for visibility */
+}
+
+/* Update Main CTA Button to White Background */
+.main-cta {
+    background-color: var(--white) !important; /* Button Background to White */
+    color: var(--black) !important; /* Text to Black for contrast */
+    padding: 18px 45px !important;
+    font-size: 1.1rem;
+    font-weight: 900 !important;
+    border-radius: 50px !important;
+    border: 2px solid transparent !important;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.main-cta:hover {
+    transform: scale(1.15) translateY(-5px) !important;
+    background-color: var(--germany-gold) !important; /* Changes to Gold on hover */
+    color: var(--black) !important;
+    box-shadow: 0 15px 30px rgba(212, 175, 55, 0.5);
+    cursor: pointer;
+}
+
+.dot.active {
+    background: var(--germany-gold);
+    width: 40px;
+    border-radius: 20px;
+}
+/* Container spacing and alignment fix */
+.container-header {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Ensure left alignment */
+    gap: 12px; /* Fixed gap for heading/subheading */
+    z-index: 10;
+    min-height: 500px; /* Provides vertical room for animations */
+    padding-top: 40px;
+}
+
+/* Entrance Animation for each element */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Targeted class to ensure animations play only on active slides */
+.slide-fade .tagline,
+.slide-fade .slide-title,
+.slide-fade .slide-subtitle,
+.slide-fade .slide-points,
+.slide-fade .slide-footer,
+.slide-fade .hero-btns {
+    animation: fadeInUp 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    opacity: 0;
+}
+
+/* Staggered Entrance - Adjusted for smoother flow */
+.slide-fade .tagline { animation-delay: 0.1s; }
+.slide-fade .slide-title { animation-delay: 0.2s; }
+.slide-fade .slide-subtitle { animation-delay: 0.3s; }
+.slide-fade .slide-points { animation-delay: 0.45s; }
+.slide-fade .slide-footer { animation-delay: 0.55s; }
+.slide-fade .hero-btns { animation-delay: 0.7s; }
+
+/* 2. SPECIFIC TEXT COLORS & SHADOWS */
+.slide-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 4.8rem; /* Slightly larger for impact */
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.05;
+    margin: 0;
+    /* Enhanced shadow to pop against random flag colors */
+    text-shadow: 2px 4px 20px rgba(0, 0, 0, 0.8); 
+}
+
+.slide-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--germany-gold);
+    margin-top: 5px;
+    letter-spacing: 0.5px;
+}
+
+.slide-points {
+    margin: 10px 0;
     padding: 0;
 }
 
-.img-wrapper {
-    width: 100%;
-    max-width: 850px; 
+.slide-points li {
+    font-size: 1.15rem;
+    color: #ffffff;
+    margin-bottom: 10px;
     display: flex;
-    justify-content: center;
-    bottom: 2px;
-    position: absolute;
+    align-items: center;
+    gap: 12px;
+    text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
 }
 
-.img-wrapper img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    border-radius: 20px 20px 0 0;
-    filter: drop-shadow(0 0 20px rgba(255, 206, 0, 0.1)); 
+.slide-points li span {
+    color: var(--germany-red);
+    font-weight: 900;
 }
 
-@media (max-width: 992px) {
-    .spotlight-section {
-        flex-direction: column;
-        text-align: center;
-        padding: 40px 20px;
-    }
-
-    .container-header {
-        width: 100%;
-        padding-right: 0;
-        margin-bottom: 40px;
-    }
-
-    .img-container {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .img-wrapper {
-        max-width: 100%;
-    }
-}
-@media (max-width: 1300px) {
-    .img-wrapper {
-        max-width: 600px;
-    }
-}
-@media (max-width: 1024px) {
-    .img-wrapper {
-        max-width: 500px;
-    }
-}
-@media (max-width: 768px) {
-    .img-wrapper {
-        display: none;
-    }
-}
-
-.container-header h1 {
-    margin-bottom: 20px;
-    color: var(--white);
-    font-size: 3rem;
-    line-height: 1.2;
-}
-
-.container-header h2 {
-    font-size: 1.2rem;
-    font-weight: 400;
-    margin-bottom: 20px;
-    color: var(--white);
+.slide-footer {
+    font-size: 1.15rem;
+    color: #eeeeee;
+    max-width: 600px;
     line-height: 1.5;
+    margin-top: 15px;
+    border-left: 4px solid var(--germany-red);
+    padding-left: 15px;
 }
 
-.container-header p {
-    font-size: 14px;
-    color: #ccc;
-    margin-bottom: 30px;
-}
 
-.hero-btns {
-    display: flex;
-    gap: 20px;
-}
-
-.hero-btns .btn, 
-.hero-btns .btn a {
-    color: var(--white) !important;
-    text-decoration: none;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.hero-btns .btn:hover {
-    transform: scale(1.05);
-}
 
 .german-info {
     width: 100%;
@@ -135,13 +230,13 @@
 }
 
 .dark-bg {
-    background-color: #221d33;
-    color: #ffffff;
+    background: var(--white);
+    color: var(--text-dark);
 }
 
 .light-bg {
-    background-color: #ffffff;
-    color: #221d33;
+    background: var(--light-gray);
+    color: var(--text-dark);
 }
 
 .container {
@@ -172,13 +267,20 @@
 }
 
 .section-title {
-    font-size: 2.8rem;
+    font-size: 2.6rem;
     font-weight: 800;
     margin-bottom: 30px;
+    color: var(--black);
+    position: relative;
 }
 
-.dark-bg .section-title {
-    color: #FFCE00;
+.section-title::after {
+    content: "";
+    width: 60px;
+    height: 4px;
+    background: var(--red);
+    display: block;
+    margin-top: 12px;
 }
 
 .section-img {
@@ -187,11 +289,7 @@
     height: 350px;
     object-fit: cover;
     border-radius: 15px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-}
-
-.dark-bg .section-img {
-    border: 4px solid #ffffff;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.08);
 }
 
 .benefits-grid {
@@ -204,87 +302,194 @@
     font-size: 1.1rem;
 }
 
-.target-list, .approach-list {
+.target-list,
+.approach-list {
     list-style: none;
     padding: 0;
 }
 
-.target-list li, .approach-list li {
+.target-list li,
+.approach-list li {
     font-size: 1.2rem;
     margin-bottom: 15px;
 }
 
-.courses {
-    background-color: #f8f9fa;
+/* Container & Section Base */
+.courses-interactive {
     padding: 80px 0;
+    background: #ffffff;
+    overflow: hidden;
+    min-height: 600px;
+    position: relative;
 }
 
 .title-head {
     text-align: center;
     margin-bottom: 50px;
     font-size: 3rem;
-    color: #221d33;
     font-weight: 800;
+    color: var(--black);
 }
 
-.course-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-}
-
-.course-card {
-    background: #ffffff;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(34, 29, 51, 0.1);
-    transition: all 0.4s ease;
+/* 1. AUTOMATIC MARQUEE (Moving Left) */
+.course-track.scroll {
     display: flex;
-    flex-direction: column;
-    border: 1px solid #eee;
+    gap: 30px;
+    width: max-content;
+    animation: marqueeMove 15s linear infinite; 
 }
 
-.course-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 20px 40px rgba(34, 29, 51, 0.15);
+@keyframes marqueeMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
-.course-image {
+.scroll .course-node {
+    width: 280px;
+    flex-shrink: 0;
+}
+
+.scroll .node-media {
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.scroll .node-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Fix for image scaling */
+}
+
+.scroll .node-info h3 {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 1.1rem;
+}
+
+/* Click Button Overlay */
+.click-overlay {
+    position: relative; /* Changed from absolute */
+    display: flex;
+    justify-content: center; /* Centers the button horizontally */
+    align-items: center;
+    margin-top: 40px; /* Space between the courses and the button */
+    width: 100%;
+    left: 0;
+    transform: none; /* Remove the translate(-50%, -50%) */
+    z-index: 10;
+}
+
+/* Ensure the container doesn't cut off the button */
+.courses-interactive {
+    padding: 80px 0;
+    background: #ffffff;
+    overflow: hidden;
+    min-height: 700px; /* Increased to accommodate the button below */
     position: relative;
-    height: 200px;
 }
 
-.course-image img {
+.click-here-btn {
+    padding: 15px 35px;
+    background: var(--germany-red);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.click-here-btn:hover {
+    transform: scale(1.1);
+}
+/* 2. THE SICK CIRCLE ANIMATION (Cluster Mode) */
+.course-track.cluster {
+    position: relative;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cluster .course-node {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 140px;
+    height: 140px;
+    margin-top: -70px; /* Centering fix */
+    margin-left: -70px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--gold);
+    
+    /* Perfect Circle Math */
+    --angle: calc(360deg / var(--total) * var(--index));
+    transform: rotate(var(--angle)) translate(180px) rotate(calc(-1 * var(--angle)));
+    transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cluster .node-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.course-card .badge {
+.cluster .node-info { display: none; }
+
+/* 3. FINAL GRID SHOW (Standard View) */
+.course-track.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    animation: gridFadeIn 0.8s ease forwards;
+}
+.grid .course-node {
+    background: #fff;
+    border-radius: 15px;
+    border: 1px solid #eee;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+
+.grid .node-media {
+    height: 200px;
+    position: relative;
+}
+
+.grid .node-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.grid .node-badge {
     position: absolute;
     top: 15px;
     left: 15px;
-    background: #FFCE00;
-    color: #221d33;
-    padding: 6px 15px;
+    background: var(--red);
+    color: white;
+    padding: 5px 15px;
     border-radius: 50px;
-    font-size: 0.85rem;
-    font-weight: 700;
+    font-size: 0.8rem;
+    font-weight: bold;
 }
 
-.course-content {
-    padding: 25px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+.grid .node-info { padding: 25px; }
+
+.grid .node-outcome {
+    margin-top: 15px;
+    padding: 12px;
+    background: #fdfaf0;
+    border-left: 4px solid var(--gold);
+    font-size: 0.9rem;
 }
 
-.outcome-box {
-    margin-top: auto;
-    background: #221d33;
-    color: #fff;
-    padding: 12px 15px;
-    border-radius: 8px;
+@keyframes gridFadeIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 992px) {
@@ -293,17 +498,26 @@
         text-align: center;
         padding: 60px 20px;
     }
-    .container-header, .img-container {
+
+    .container-header,
+    .img-container {
         width: 100%;
+        padding-right: 0;
     }
+
     .hero-btns {
         justify-content: center;
+        flex-direction: column;
+        align-items: center;
     }
-    .flex-row, .reverse .flex-row {
+
+    .flex-row,
+    .reverse .flex-row {
         flex-direction: column;
         text-align: center;
         gap: 40px;
     }
+
     .section-title {
         font-size: 2.2rem;
     }
@@ -313,21 +527,15 @@
     .container-header h1 {
         font-size: 2.2rem;
     }
+
     .course-grid {
         grid-template-columns: 1fr;
     }
-    .hero-btns {
-        flex-direction: column;
-        align-items: center;
-    }
-    .hero-btns .btn {
-        width: 100%;
-        max-width: 300px;
-    }
+
     .benefits-grid {
         grid-template-columns: 1fr;
-        text-align: left;
-        max-width: 250px;
+        max-width: 280px;
         margin: 0 auto;
+        text-align: left;
     }
 }

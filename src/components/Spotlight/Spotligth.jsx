@@ -1,12 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { spotlightSlides, coursesData  } from '../../data';
 import './Spotligth.css';
 import { Link } from 'react-router-dom';
 import teacher from '../../img/1.avif';
 import university from '../../img/2.avif';
-import clean from  '../../img/3.webp';
-import spotligth_img from '../../img/spotlight.png';
+import clean from '../../img/3.webp';
 
-function Spotlight({ coursesData }) {
+
+function Spotlight() {
+    // FIXED: Removed duplicate useState declarations
+    const [viewMode, setViewMode] = useState('scroll');
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [themeColor, setThemeColor] = useState('#0f0f0f');
+
+    // German Flag Colors: Black, Red, Gold
+    const flagColors = ['#0f0f0f', '#C00000', '#a4882aa3'];
+
+    // 1. Automatic Slider & Theme Change
+    useEffect(() => {
+        if (!spotlightSlides || spotlightSlides.length === 0) return;
+        
+        const interval = setInterval(() => {
+            const nextIndex = (currentIndex + 1) % spotlightSlides.length;
+            setCurrentIndex(nextIndex);
+            
+            // Pick a random flag color for the theme
+            const randomColor = flagColors[Math.floor(Math.random() * flagColors.length)];
+            setThemeColor(randomColor);
+        }, 3000);
+        
+        return () => clearInterval(interval);
+    }, [currentIndex]);
+
+    // 2. Intersection Observer for scroll animations
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -16,115 +42,182 @@ function Spotlight({ coursesData }) {
             });
         }, { threshold: 0.1 });
 
-        const elements = document.querySelectorAll('.info-block, .course-card, .container-header, .section-title');
+        const elements = document.querySelectorAll('.container-header, .section-title, .course-node');
         elements.forEach(el => observer.observe(el));
 
         return () => observer.disconnect();
-    }, [coursesData]);
+    }, [currentIndex, viewMode]);
 
-    if (!coursesData) return <h1>No courses available</h1>;
+    if (!coursesData || !spotlightSlides) return <h1 className="loading">Loading Pro2Deutsch...</h1>;
+
+    const slide = spotlightSlides[currentIndex];
+    const currentBgImage = slide?.img?.[0];
+
+    const handleInitialClick = () => {
+        setViewMode('cluster');
+        setTimeout(() => setViewMode('grid'), 2000); 
+    };
 
     return (
-        <>
-        <section className="spotlight-section">
-            <div className="container-header">
-                <h1>Learn German the Smart Way From Beginner to <br/> B2 & Beyond</h1>
-                <h2>Flexible, result-driven online German language coaching designed for working professionals, students, and exam-focused learners.</h2>
-                <p>Whether you are starting from zero or preparing for B2 exams, job interviews, or career opportunities in Germany, we provide structured, practical, and exam-oriented German training—completely online.</p>
-                <div className="hero-btns">
-                    <button className="btn btn-primary" onClick={() => window.open('https://wa.me/917892793468?text=Hello,%20I%20would%20like%20to%20book%20a%20free%20demo%20for%20German%20classes.', '_blank')}>Book a Free Demo</button>
-                    <button className="btn btn-primary"> <Link to="/Courses"> Explore Courses </Link></button>
-                </div>
-            </div>
-            <div className="img-container">
-                <div className="img-wrapper">
-                    <img src={spotligth_img} alt="Spotlight" />
-                </div>
-            </div>
-        </section>
+        <div className="page-wrapper">
+            {/* --- SPOTLIGHT SECTION --- */}
+            <section 
+                className="spotlight-section split-layout"
+                            style={{ backgroundColor: themeColor }}
+                        >
+                            {/* Dynamic Background Layer */}
+                            <div 
+                                className="dynamic-bg" 
+                                style={{ 
+                                    backgroundImage: `linear-gradient(rgba(15, 15, 15, 0.75), rgba(15, 15, 15, 0.75)), url(${currentBgImage})` 
+                                }}
+                            ></div>
+                            
+                            <div className="container spotlight-flex">
+                                {/* Left Side: Content */}
+                                <div className="container-header slide-fade" key={`content-${currentIndex}`}>
+                    <span className="tagline">
+                        {slide.tagline}
+                    </span>
+                    <h1 className="slide-title">{slide.title}</h1>
+                    <h2 className="slide-subtitle">{slide.subtitle}</h2>
+                    
+                    <ul className="slide-points">
+                        {slide.points.map((point, i) => (
+                            <li key={i}><span>✔</span> {point}</li>
+                        ))}
+                    </ul>
 
-        <section className="german-info">
-            <div className="info-row dark-bg">
-                <div className="container flex-row">
-                    <div className="text-side">
-                        <h2 className="section-title">WHY LEARN GERMAN WITH US?</h2>
-                        <div className="benefits-grid">
-                            <div className="benefit-item"><span>✔</span> Certified trainers</div>
-                            <div className="benefit-item"><span>✔</span> Live online classes</div>
-                            <div className="benefit-item"><span>✔</span> Flexible schedules</div>
-                            <div className="benefit-item"><span>✔</span> Exam-oriented prep</div>
-                            <div className="benefit-item"><span>✔</span> Speaking-focused</div>
-                            <div className="benefit-item"><span>✔</span> Small batch options</div>
-                        </div>
-                    </div>
-                    <div className="image-side">
-                        <img src={teacher} alt="Training" className="section-img" />
-                    </div>
-                </div>
-            </div>
+                    {slide.footer && <p className="slide-footer">{slide.footer}</p>}
 
-            <div className="info-row light-bg reverse">
-                <div className="container flex-row">
-                    <div className="text-side">
-                        <h2 className="section-title">WHO IS THIS FOR?</h2>
-                        <ul className="target-list">
-                            <li><span className="emoji">👨‍💼</span> Professionals for Germany</li>
-                            <li><span className="emoji">🎓</span> Students for studies abroad</li>
-                            <li><span className="emoji">🗣</span> B2 interview preparation</li>
-                            <li><span className="emoji">🌱</span> Absolute beginners</li>
-                        </ul>
-                    </div>
-                    <div className="image-side">
-                        <img src={university} alt="Target Audience" className="section-img" />
+                    <div className="hero-btns">
+                        <button className="btn btn-primary main-cta">
+                            {slide.buttonText}
+                        </button>
                     </div>
                 </div>
-            </div>
 
-            <div className="info-row dark-bg">
-                <div className="container flex-row">
-                    <div className="text-side">
-                        <h2 className="section-title">OUR TEACHING APPROACH</h2>
-                        <p className="approach-intro">Structured and practical learning model:</p>
-                        <ul className="approach-list">
-                            <li>Grammar mastery</li>
-                            <li>Professional vocabulary</li>
-                            <li>Regular speaking practice</li>
-                            <li>Continuous feedback</li>
-                        </ul>
-                    </div>
+                    {/* Right Side: Fixed Image Stack */}
                     <div className="image-side">
-                        <img src={clean} alt="Methodology" className="section-img" />
-                    </div>
-                </div>
-            </div>
-        </section>
-            
-        <section className="courses">
-            <div className="container">
-                <h2 className="title-head">Our Courses</h2>
-                <div className="course-grid">
-                    {coursesData.map((course, index) => (
-                        <div className="course-card" key={index}>
-                            <div className="course-image">
-                                <img src={course.image || 'path-to-default-course-img.jpg'} alt={course.name} />
-                                <span className="badge">{course.level}</span>
-                            </div>
-                            <div className="course-content">
-                                <h3>{course.name}</h3>
-                                <p className="desc">{course.description}</p>
-                                <ul className="topic-list">
-                                    {course.topics.map((item, i) => <li key={i}>✔ {item}</li>)}
-                                </ul>
-                                <div className="outcome-box">
-                                    <strong>Outcome:</strong> {course.outcome}
+                        <div className="image-stack" key={`img-${currentIndex}`}>
+                            {slide.img && slide.img.map((imageSource, idx) => (
+                                <div key={idx} className={`stack-img img-${idx}`}>
+                                    <img src={imageSource} alt="German Coaching" />
                                 </div>
-                            </div>
+                            ))}
                         </div>
+                    </div>
+                </div>
+                
+                <div className="slide-dots">
+                    {spotlightSlides.map((_, i) => (
+                        <div 
+                            key={i} 
+                            className={`dot ${i === currentIndex ? 'active' : ''}`} 
+                            onClick={() => setCurrentIndex(i)}
+                        />
                     ))}
                 </div>
-            </div>
-        </section>
-        </>
+            </section>
+
+            <section className="german-info">
+                <div className="info-row dark-bg">
+                    <div className="container flex-row">
+                        <div className="text-side">
+                            <h2 className="section-title">WHY LEARN GERMAN WITH US?</h2>
+                            <div className="benefits-grid">
+                                <div className="benefit-item"><span>✔</span> Certified trainers</div>
+                                <div className="benefit-item"><span>✔</span> Live online classes</div>
+                                <div className="benefit-item"><span>✔</span> Flexible schedules</div>
+                                <div className="benefit-item"><span>✔</span> Exam-oriented prep</div>
+                                <div className="benefit-item"><span>✔</span> Speaking-focused</div>
+                                <div className="benefit-item"><span>✔</span> Small batch options</div>
+                            </div>
+                        </div>
+                        <div className="image-side">
+                            <img src={teacher} alt="Training" className="section-img" />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="info-row light-bg reverse">
+                    <div className="container flex-row">
+                        <div className="text-side">
+                            <h2 className="section-title">WHO IS THIS FOR?</h2>
+                            <ul className="target-list">
+                                <li><span className="emoji">👨‍💼</span> Professionals for Germany</li>
+                                <li><span className="emoji">🎓</span> Students for studies abroad</li>
+                                <li><span className="emoji">🗣</span> B2 interview preparation</li>
+                                <li><span className="emoji">🌱</span> Absolute beginners</li>
+                            </ul>
+                        </div>
+                        <div className="image-side">
+                            <img src={university} alt="Target Audience" className="section-img" />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="info-row dark-bg">
+                    <div className="container flex-row">
+                        <div className="text-side">
+                            <h2 className="section-title">OUR TEACHING APPROACH</h2>
+                            <p className="approach-intro">Structured and practical learning model:</p>
+                            <ul className="approach-list">
+                                <li>Grammar mastery</li>
+                                <li>Professional vocabulary</li>
+                                <li>Regular speaking practice</li>
+                                <li>Continuous feedback</li>
+                            </ul>
+                        </div>
+                        <div className="image-side">
+                            <img src={clean} alt="Methodology" className="section-img" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+                
+            {/* ... inside your return ... */}
+            <section className={`courses-interactive ${viewMode}`}>
+                <div className="container">
+                    <h2 className="title-head">Our Courses</h2>
+
+                    <div 
+                        className={`course-track ${viewMode}`}
+                        style={{ '--total': coursesData.length }}
+                    >
+                        {/* Duplicated data for marquee */}
+                        {(viewMode === 'scroll' ? [...coursesData, ...coursesData] : coursesData).map((course, index) => (
+                            <div className="course-node" key={index} style={{ '--index': index }}>
+                                <div className="node-media">
+                                    <img src={course.image} alt={course.level} />
+                                    {viewMode === 'grid' && <span className="node-badge">{course.level}</span>}
+                                </div>
+                                <div className="node-info">
+                                    <h3>{course.name}</h3>
+                                    {viewMode === 'grid' && (
+                                        <div className="node-details">
+                                            <p>{course.description}</p>
+                                            <div className="node-outcome">
+                                                <strong>Outcome:</strong> {course.outcome}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* MOVE THIS BELOW THE TRACK */}
+                    {viewMode === 'scroll' && (
+                        <div className="click-overlay">
+                            <button className="click-here-btn" onClick={handleInitialClick}>
+                                CLICK HERE
+                            </button>
+                        </div>
+                    )}
+                </div>
+            </section>
+        </div>
     );
 }
 

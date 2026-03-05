@@ -130,16 +130,24 @@
     margin-top: 35px;
 }
 
+.btn-primary, .btn-secondary {
+    text-align: center;
+    text-decoration: none; 
+    display: block; 
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1rem;
+    font-family: inherit;
+    background: transparent;
+}
+
 .btn-primary {
     background: #FFCE00;
     color: #221d33;
     border: none;
     padding: 18px;
     font-weight: 800;
-    font-size: 1rem;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: 0.3s;
 }
 
 .btn-primary:hover {
@@ -153,10 +161,6 @@
     border: 2px solid #FFCE00;
     padding: 16px;
     font-weight: 700;
-    font-size: 1rem;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: 0.3s;
 }
 
 .btn-secondary:hover {

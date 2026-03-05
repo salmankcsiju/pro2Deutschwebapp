@@ -70,7 +70,7 @@ function CourseDetail() {
               <div className="action-buttons">
                 <button 
                 >
-                <Link to="/enroll" className="enroll-link">
+                <Link to="/enroll" className="btn-primary">
                     ENROLL NOW
                 </Link>
                 </button>

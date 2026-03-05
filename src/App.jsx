@@ -23,7 +23,7 @@ function App() {
           <Routes>  
             <Route path="/" element={
               <>
-              <Spotlight coursesData={coursesData} />
+              <Spotlight coursesData={coursesData}  />
               <Features />
               <Enrollment />
               </>

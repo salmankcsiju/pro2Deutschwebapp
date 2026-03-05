@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
 import './Navbar.css';
-import logo from '../../img/logo2.JPG';
+import logo from '../../img/logo2 - Copy.JPG';
+import logoname from '../../img/logoName - Copy.png';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-
-  const scrollToEnroll = () => {
-    setIsOpen(false);
-    const section = document.getElementById('enroll-now');
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <nav className="navbar">
@@ -27,13 +21,14 @@ function Navbar() {
         </div>
 
         <ul className={`nav-links ${isOpen ? "open" : ""}`}>
+          <img src={logoname} alt="Pro2Deutsch Logo" />
           <li><a href="/" onClick={() => setIsOpen(false)}>Home</a></li>
           <li><a href="/Courses" onClick={() => setIsOpen(false)}>Courses</a></li>
           <li><a href="/about" onClick={() => setIsOpen(false)}>About</a></li>
           <li><a href="/blog" onClick={() => setIsOpen(false)}>Blog</a></li>
           <li>
-            <button className="enroll-btn-nav" onClick={scrollToEnroll}>
-              Enroll Now
+            <button className="enroll-btn-nav" >
+              <Link to="/enroll" className="enroll-link">Enroll Now</Link>
             </button>
           </li>
         </ul>

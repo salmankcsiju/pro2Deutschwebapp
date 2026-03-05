@@ -1,7 +1,20 @@
 import img1 from "./img/bignner-german.jpg";
 import img2 from "./img/Elementary-german.webp";
-import img3 from './img/Intermediate-german.webp';
+import img3 from './img/Intermediate German b-1.webp';
 import img4 from './img/Upper-intermediate.jpg';
+import struggle from './img/struggle1.jpeg';
+import struggle2 from './img/struggle2.jpeg';
+import Speking from './img/speaking1.jpeg';
+import Specking2 from './img/speaking2.jpeg';
+import Vocab from './img/Vocab1.jpeg';
+import Exam from './img/Exam.jpeg';
+import Exam2 from './img/Exam2.jpeg';
+import Courses from './img/A1-b2-1.jpeg';
+import Courses2 from './img/A1-b2-2.jpeg';
+import Courses3 from './img/A1-b2-3.jpeg';
+
+
+
 
 export const coursesData = [
   {
@@ -170,4 +183,71 @@ export const specializedPrograms = [
     topics: ["Customized study plan", "Flexible timing", "Faster results", "Individual attention"],
     outcome: "Maximum efficiency and personalized learning path."
   }
+];
+
+
+export const spotlightSlides = [
+    {
+        tagline: "Pro2Deutsch – Where Structured Learning Builds Confident Communicators.",
+        title: "WHY STUDENTS STRUGGLE",
+        img:[struggle, struggle2],
+        subtitle: "Why Most Students Don’t Improve Even After Completing Levels",
+        points: [
+            "They learn grammar but don’t practice speaking",
+            "Vocabulary is not structured",
+            "No personal feedback on writing",
+            "No exam strategy training",
+            "No clear roadmap from A1 to B2"
+        ],
+        footer: "German becomes overwhelming. At Pro2Deutsch, we fix this with structure, clarity, and guided progression.",
+        buttonText: "Learn More",
+        type: "struggle"
+    },
+    {
+        tagline: "Pro2Deutsch – Your Path to Fluency.",
+        title: "1-Month Speaking & Vocabulary",
+        img:[Speking, Specking2, Vocab],
+        subtitle: "Speak Clearly. Build Word Power.",
+        description: "Focused programs to improve real communication and strengthen your language foundation.",
+        points: [
+            "Daily speaking practice & role plays",
+            "Pronunciation & personal feedback",
+            "Topic-based vocabulary & sentence usage",
+            "Memory techniques for retention"
+        ],
+        buttonText: "View Mini-Courses",
+        type: "mini-course"
+    },
+    {
+        tagline: "Pro2Deutsch – Prepare Smart. Perform Confidently.",
+        title: "Intensive Exam Preparation",
+        img:[Exam, Exam2],
+        subtitle: "For Goethe / TELC / ÖSD exams",
+        points: [
+            "Exam pattern strategy",
+            "Timed mock tests",
+            "Writing correction",
+            "Speaking simulations",
+            "Time management training"
+        ],
+        footer: "We guide you honestly and prepare you thoroughly.",
+        buttonText: "Start Exam Preparation",
+        type: "exam"
+    },
+    {
+        tagline: "Pro2Deutsch – Beginner to Advanced.",
+        title: "Complete A1–B2 Program",
+        img:[Courses, Courses2, Courses3],
+        subtitle: "7-Month Structured Pathway",
+        points: [
+            "Clear grammar foundation",
+            "Integrated speaking practice",
+            "Listening & writing training",
+            "Regular assessments",
+            "Continuous academic support"
+        ],
+        footer: "Strong foundations. Real fluency.",
+        buttonText: "Start Your German Journey",
+        type: "full-program"
+    }
 ];
