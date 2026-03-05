@@ -10,7 +10,9 @@ import Blog from './pages/Blog/Blog';
 import WhatsAppWidget from './components/Whatsapp/WhatsAppWidget';
 import Enrollment from './components/Enrollment/Enrollment';
 import Features from './components/Features/Features';
+import FAQ from './components/FAQ/FAQ';
 import CourseDetail from './pages/CoursesDetails/CourseDetail';
+import LeadPopup from './components/LeadPopup/LeadPopup';
 import { coursesData } from './data';
 
 
@@ -19,21 +21,23 @@ function App() {
     <Router>
       <div className="App">
         <Navbar />
+        <LeadPopup />
         <div className="content">
-          <Routes>  
+          <Routes>
             <Route path="/" element={
               <>
-              <Spotlight coursesData={coursesData}  />
-              <Features />
-              <Enrollment />
+                <Spotlight coursesData={coursesData} />
+                <Features />
+                <FAQ />
+                <Enrollment />
               </>
-              } /> 
+            } />
             <Route path="/Courses" element={<Courses />} />
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/enroll" element={<Enrollment />} />
-            <Route path="/course/:id" 
-            element={<CourseDetail />} />
+            <Route path="/course/:id"
+              element={<CourseDetail />} />
           </Routes>
         </div>
         <Footer />

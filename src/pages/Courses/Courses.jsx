@@ -14,7 +14,10 @@ function Courses() {
 
         <div className="detailed-grid">
           {coursesDetailData.map((course) => (
-            <Link to={`/course/${course.id}`} className="detailed-card navy-card" key={course.id}>
+            <Link to={`/course/${course.id}`} className="detailed-card" key={course.id}>
+              <div className="card-image-container">
+                <img src={course.image} alt={course.name} className="card-cover-image" />
+              </div>
               <div className="card-top">
                 <span className="level-tag">{course.level}</span>
                 <h2>{course.name}</h2>
@@ -35,7 +38,10 @@ function Courses() {
           <h2 className="section-title">Specialized Programs</h2>
           <div className="detailed-grid">
             {specializedPrograms.map((prog) => (
-              <Link to={`/course/${prog.id}`} className="detailed-card specialized-highlight navy-card" key={prog.id}>
+              <Link to={`/course/${prog.id}`} className="detailed-card specialized-highlight" key={prog.id}>
+                <div className="card-image-container">
+                  <img src={prog.image} alt={prog.name} className="card-cover-image" />
+                </div>
                 <div className="card-top">
                   <span className="level-tag">{prog.level}</span>
                   <h2>{prog.name}</h2>

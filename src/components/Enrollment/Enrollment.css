@@ -1,16 +1,16 @@
 .enroll-section {
-    padding: 20px 0 60px; /* Reduced top padding to stay close to content */
-    background: #fff;
+    padding: 80px 0;
+    background-color: var(--secondary);
 }
 
 .enroll-card {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background: #221d33; /* Pro2Deutsch Blue */
-    border-radius: 20px;
+    background: var(--white);
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
     overflow: hidden;
-    color: white;
-    box-shadow: 0 15px 35px rgba(0, 68, 148, 0.25);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
 }
 
 .animate-enroll {
@@ -25,27 +25,63 @@
 }
 
 .enroll-content {
-    padding: 40px;
-    background: linear-gradient(135deg, #221d33 0%, #221d33 100%);
+    padding: 60px;
+    background: var(--primary);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.enroll-badge {
-    background: #d40000;
-    padding: 4px 12px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: bold;
+.enroll-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
     text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    padding: 6px 16px;
+    border-radius: 4px;
+    align-self: flex-start;
+    margin-bottom: 20px;
 }
 
-.enroll-content h2 { font-size: 2rem; margin: 15px 0; line-height: 1.2; }
+.enroll-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 500;
+    color: var(--white);
+    margin: 0 0 15px;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+}
 
-.enroll-benefits { list-style: none; padding: 0; margin-top: 20px; }
-.enroll-benefits li { margin-bottom: 12px; font-size: 1rem; color: #e0e0e0; }
+.enroll-desc {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.enroll-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.enroll-benefits li {
+    margin-bottom: 15px;
+    font-size: 1.05rem;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
 
 .enroll-action {
-    padding: 40px;
-    background: #f8f9fa;
+    padding: 60px;
+    background: var(--white);
     display: flex;
     align-items: center;
 }
@@ -54,60 +90,59 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
-.enroll-form input, .enroll-form select {
+.enroll-form input,
+.enroll-form select {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    padding: 15px 20px;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
     font-size: 1rem;
+    background: var(--white);
+    color: var(--text-main);
+    transition: all 0.3s ease;
 }
 
-.submit-btn-glow {
-    background: #d40000;
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 6px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.3s;
-    box-shadow: 0 4px 15px rgba(212, 0, 0, 0.3);
+.enroll-form input:focus,
+.enroll-form select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(34, 34, 34, 0.1);
 }
 
-.submit-btn-glow:hover {
-    background: #b30000;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(212, 0, 0, 0.4);
+.enroll-form input::placeholder {
+    color: var(--text-muted);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.05rem;
+    margin-top: 10px;
 }
 
 @media (max-width: 900px) {
-    .enroll-card { grid-template-columns: 1fr; }
-    .enroll-content { padding: 30px; }
-}
+    .enroll-card {
+        grid-template-columns: 1fr;
+    }
 
-
-.enroll-form input, .enroll-form select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 1rem;
-    background: white;
-    color: #333;
+    .enroll-content,
+    .enroll-action {
+        padding: 40px 20px;
+    }
 }
 
 .submission-status {
     margin-top: 10px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #004494;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #28a745;
     text-align: center;
 }
 
-/* Red text for error if needed */
 .submission-status.error {
-    color: #d40000;
+    color: #dc3545;
 }
